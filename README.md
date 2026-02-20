@@ -166,6 +166,38 @@ Add `theme="dark"` to your `<body>` tag to automatically enable dark mode.
 
 ---
 
+## Theme Preset Support
+
+This package now supports **preset color themes** for cookie banners. You can choose from:
+
+| Preset         | Description                                                    |
+| -------------- | -------------------------------------------------------------- |
+| `basic`        | Default neutral theme, clean and simple.                       |
+| `modern-blue`  | Professional blue style, ideal for SaaS/web apps.              |
+| `trust-green`  | Privacy-friendly green, promotes trust and eco-friendly vibes. |
+| `soft-neutral` | Minimal soft gray, subtle and non-intrusive.                   |
+| `dark`         | Dark mode theme, low-light friendly.                           |
+
+### How to configure
+
+In `config/cookie-consent.php`:
+
+```php
+/*
+|--------------------------------------------------------------------------
+| Theme Preset
+|--------------------------------------------------------------------------
+| basic        - Default neutral theme
+| modern-blue  - Professional blue style
+| trust-green  - Privacy-friendly green style
+| soft-neutral - Minimal soft gray theme
+| dark         - Dark theme
+*/
+'theme_preset' => env('COOKIE_CONSENT_THEME_PRESET', 'basic'),
+```
+
+---
+
 ### 🌐 Enable RTL Mode
 
 Add `dir="rtl"` to your `<body>` tag to enable right-to-left layout for RTL languages.

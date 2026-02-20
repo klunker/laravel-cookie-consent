@@ -15,6 +15,46 @@
     --cc-button-text-color: #161a1c;
 }
 
+[cookie-consent-theme-preset="modern-blue"] {
+    --cc-card-bg-color: #ffffff;
+    --cc-card-text-color: #1f2937;
+
+    --cc-button-bg-color-rgb: 37, 99, 235; /* blue-600 */
+    --cc-button-text-color: #ffffff;
+
+    --cc-border-color: #e5e7eb;
+}
+
+[cookie-consent-theme-preset="trust-green"] {
+    --cc-card-bg-color: #f0fdf4;
+    --cc-card-text-color: #14532d;
+
+    --cc-button-bg-color-rgb: 22, 163, 74; /* green-600 */
+    --cc-button-text-color: #ffffff;
+
+    --cc-border-color: #bbf7d0;
+}
+
+[cookie-consent-theme-preset="soft-neutral"] {
+    --cc-card-bg-color: #f9fafb;
+    --cc-card-text-color: #374151;
+
+    --cc-button-bg-color-rgb: 31, 41, 55; /* gray-800 */
+    --cc-button-text-color: #ffffff;
+
+    --cc-border-color: #e5e7eb;
+}
+
+[cookie-consent-theme-preset="dark"] {
+    --cc-card-bg-color: #161a1c;
+    --cc-card-text-color: #f3f4f6;
+
+    --cc-button-bg-color-rgb: 194, 208, 224;
+    --cc-button-text-color: #111827;
+
+    --cc-border-color: #2a2a2a;
+}
+
 .cookie-disable-interaction body {
     height: auto !important;
     overflow: hidden !important;

@@ -118,6 +118,18 @@
 
 {!! CookieConsent::scriptsPath() !!}
 
+@php
+    $cookieConsentThemePreset = config('laravel-cookie-consent.theme_preset');
+@endphp
+
+@if (isset($cookieConsentThemePreset) && !is_null($cookieConsentThemePreset))
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        document.documentElement.setAttribute('cookie-consent-theme-preset', @json($cookieConsentThemePreset));
+    });
+</script>
+@endif
+
 <script type="text/javascript">
     "use strict";
     // Load analytics/tracking services based on preferences

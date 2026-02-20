@@ -122,6 +122,18 @@ return [
      */
     'theme' => env('COOKIE_CONSENT_THEME', 'default'),
 
+    /*
+    |--------------------------------------------------------------------------
+    | Theme Preset
+    |--------------------------------------------------------------------------
+    | basic        - Default neutral theme
+    | modern-blue  - Professional blue style
+    | trust-green  - Privacy-friendly green style
+    | soft-neutral - Minimal soft gray theme
+    | dark         - Dark theme
+    */
+    'theme_preset' => env('COOKIE_CONSENT_THEME_PRESET', 'basic'),
+
     /**
      * Cookie banner title text
      *
