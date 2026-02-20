@@ -49,13 +49,13 @@ class CookieConsent
     }
 
     /**
-     * Generate the HTML for the required stylesheet.
+     * Generate the HTML for the required styles.
      *
      * @return string The HTML link tag for the stylesheet.
      */
     public function styles(): string
     {
-        $stylePath = 'vendor/devrabiul/laravel-cookie-consent/css/style.css';
+        $stylePath = 'packages/devrabiul/laravel-cookie-consent/css/style.css';
         if (File::exists(public_path($stylePath))) {
             return '<link rel="stylesheet" href="' . $this->getDynamicAsset($stylePath) . '">';
         }
@@ -97,7 +97,7 @@ class CookieConsent
     public function scriptsPath(): string
     {
         $script = $this->scriptTag('vendor/devrabiul/laravel-cookie-consent/assets/js/script.js');
-        $defaultJsPath = 'vendor/devrabiul/laravel-cookie-consent/js/script.js';
+        $defaultJsPath = 'packages/devrabiul/laravel-cookie-consent/js/script.js';
         if (File::exists(public_path($defaultJsPath))) {
             $script = $this->scriptTag($defaultJsPath);
         }
@@ -125,36 +125,23 @@ class CookieConsent
      */
     private function getDynamicAsset(string $path): string
     {
-        if (self::getProcessingDirectoryConfig() == 'public') {
+        if (config('laravel-cookie-consent.system_processing_directory') == 'public') {
             $position = strpos($path, 'public/');
             $result = $path;
             if ($position === 0) {
                 $result = preg_replace('/public/', '', $path, 1);
             }
+        } else if (
+            (str_contains(realpath(public_path()), 'public\public') ||
+            str_contains(realpath(public_path()), 'public/public')) &&
+            PHP_OS_FAMILY === 'Windows'
+        ) {
+            $result = 'public/' . $path;
         } else {
-            $result = in_array(request()->ip(), ['127.0.0.1']) ? $path : 'public/' . $path;
+            $result = in_array(request()->ip(), ['127.0.0.1']) && (config('laravel-cookie-consent.system_processing_directory') != 'root') ? $path : 'public/' . $path;
         }
 
         return asset($result);
-    }
-
-
-    private function getProcessingDirectoryConfig(): string
-    {
-        $script = $_SERVER['SCRIPT_FILENAME'] ?? getcwd();
-        $scriptPath = realpath(dirname($script));
-        $basePath   = realpath(base_path());
-        $publicPath = realpath(public_path());
-
-        if ($scriptPath === $publicPath) {
-            $systemProcessingDirectory = 'public';
-        } elseif ($scriptPath === $basePath) {
-            $systemProcessingDirectory = 'root';
-        } else {
-            $systemProcessingDirectory = 'unknown';
-        }
-
-        return $systemProcessingDirectory;
     }
 
     public static function getRemoveInvalidCharacters($str): array|string

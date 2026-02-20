@@ -4,8 +4,7 @@ namespace Devrabiul\CookieConsent;
 
 use Exception;
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Cache;
 
 class CookieConsentServiceProvider extends ServiceProvider
 {
@@ -104,18 +103,20 @@ class CookieConsentServiceProvider extends ServiceProvider
      */
     private function updateProcessingDirectoryConfig(): void
     {
-        $script = $_SERVER['SCRIPT_FILENAME'] ?? getcwd();
-        $scriptPath = realpath(dirname($script));
-        $basePath   = realpath(base_path());
-        $publicPath = realpath(public_path());
+        $script = $_SERVER['SCRIPT_FILENAME'] ?? getcwd() ?? '';
+        $cacheKey = 'SYSTEM_DOMAIN_POINTED_DIRECTORY_' . md5($script);
+        $systemProcessingDirectory = Cache::rememberForever($cacheKey, function () use ($script) {
+            $scriptPath = realpath(dirname($script));
+            $basePath   = realpath(base_path());
+            $publicPath = realpath(public_path());
 
-        if ($scriptPath === $publicPath) {
-            $systemProcessingDirectory = 'public';
-        } elseif ($scriptPath === $basePath) {
-            $systemProcessingDirectory = 'root';
-        } else {
-            $systemProcessingDirectory = 'unknown';
-        }
+            if ($scriptPath === $publicPath) {
+                return 'public';
+            } elseif ($scriptPath === $basePath) {
+                return 'root';
+            }
+            return 'unknown';
+        });
 
         config(['laravel-cookie-consent.system_processing_directory' => $systemProcessingDirectory]);
     }

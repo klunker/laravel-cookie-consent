@@ -4,7 +4,6 @@ namespace Devrabiul\CookieConsent;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\File;
-use function PHPUnit\Framework\isNull;
 
 /**
  * Class AssetsServiceProvider
@@ -99,7 +98,7 @@ class AssetsServiceProvider extends ServiceProvider
      */
     private function getPublishedVersion($name): ?string
     {
-        $versionFile = public_path('vendor/'.$name.'/version.php');
+        $versionFile = public_path('packages/'.$name.'/version.php');
         if (!File::exists($versionFile)) {
             return null;
         }
@@ -131,7 +130,7 @@ class AssetsServiceProvider extends ServiceProvider
         $publishedVersion = $this->normalizeVersion($publishedVersionRaw);
 
         if ((is_null($currentVersion) && is_null($publishedVersion)) || ($currentVersion && $currentVersion !== $publishedVersion)) {
-            $assetsPath = public_path('vendor/' . $name);
+            $assetsPath = public_path('packages/' . $name);
             $sourceAssets = base_path('vendor/' . $name . '/assets');
 
             // Ensure source assets exist before proceeding
@@ -149,7 +148,7 @@ class AssetsServiceProvider extends ServiceProvider
 
             // Create version.php file with the current version
             $versionPhpContent = "<?php\n\nreturn [\n    'version' => '{$currentVersion}',\n];\n";
-            File::put(public_path('vendor/' . $name . '/version.php'), $versionPhpContent);
+            File::put(public_path('packages/' . $name . '/version.php'), $versionPhpContent);
         }
     }
 
