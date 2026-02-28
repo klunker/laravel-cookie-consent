@@ -78,7 +78,6 @@ Include these components in your Blade templates:
 <body>
 
     <!-- Your content -->
-    
     {!! CookieConsent::scripts() !!}
 </body>
 </html>
@@ -98,7 +97,6 @@ Include these components in your Blade templates:
 <body>
 
     <!-- Your content -->
-    
     {!! CookieConsent::scripts(options: [
         'cookie_lifetime' => config('laravel-cookie-consent.cookie_lifetime', 7),
         'reject_lifetime' => config('laravel-cookie-consent.reject_lifetime', 1),
@@ -155,13 +153,12 @@ Include these components in your Blade templates:
 </html>
 ```
 
-
 ### 🌙 Enable Dark Mode
 
 Add `theme="dark"` to your `<body>` tag to automatically enable dark mode.
 
 ```html
-<body theme="dark">
+<body theme="dark"></body>
 ```
 
 ---
@@ -203,7 +200,7 @@ In `config/cookie-consent.php`:
 Add `dir="rtl"` to your `<body>` tag to enable right-to-left layout for RTL languages.
 
 ```html
-<body dir="rtl">
+<body dir="rtl"></body>
 ```
 
 ## Layout Options
@@ -213,6 +210,7 @@ Add `dir="rtl"` to your `<body>` tag to enable right-to-left layout for RTL lang
 ```bash
 COOKIE_CONSENT_ENABLED=true
 COOKIE_CONSENT_PREFERENCES_ENABLED=true
+COOKIE_CONSENT_ASSET_URL=https://your-domain.com // if you are in localhost, avoid this or put null
 
 COOKIE_CONSENT_ANALYTICS=true
 COOKIE_CONSENT_MARKETING=true
@@ -243,6 +241,7 @@ COOKIE_CONSENT_PREFERENCES=true
 Edit `config/cookie-consent.php` to modify:
 
 - Cookie lifetimes
+- Custom asset URL
 - Visual styles
 - Text content
 - Category settings
@@ -296,6 +295,7 @@ function loadFacebookPixel() {
     fbq('track', 'PageView');
 }
 ```
+
 ---
 
 ## Change Cookie Preferences Link
