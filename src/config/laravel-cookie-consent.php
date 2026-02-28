@@ -31,6 +31,20 @@ return [
      */
     'enabled' => env('COOKIE_CONSENT_ENABLED', true),
 
+
+    /*
+    |--------------------------------------------------------------------------
+    | Custom Asset URL
+    |--------------------------------------------------------------------------
+    | Optionally define a custom base URL for package assets.
+    | If null or empty, Laravel's native asset() helper will be used.
+    |
+    | Example:
+    | https://your-domain.com
+    |
+    */
+    'asset_url' => env('COOKIE_CONSENT_ASSET_URL', null),
+
     /**
      * Cookie lifetime in days
      *

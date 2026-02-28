@@ -125,6 +125,13 @@ class CookieConsent
      */
     private function getDynamicAsset(string $path): string
     {
+
+        $customBaseUrl = config('laravel-cookie-consent.asset_url');
+
+        if (!empty($customBaseUrl)) {
+            return rtrim($customBaseUrl, '/') . '/' . ltrim($path, '/');
+        }
+
         if (config('laravel-cookie-consent.system_processing_directory') == 'public') {
             $position = strpos($path, 'public/');
             $result = $path;
