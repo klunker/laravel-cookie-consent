@@ -105,19 +105,26 @@ class CookieConsentServiceProvider extends ServiceProvider
     {
         $script = $_SERVER['SCRIPT_FILENAME'] ?? getcwd() ?? '';
         $cacheKey = 'SYSTEM_DOMAIN_POINTED_DIRECTORY_' . md5($script);
-        $systemProcessingDirectory = Cache::rememberForever($cacheKey, function () use ($script) {
-            $scriptPath = realpath(dirname($script));
-            $basePath   = realpath(base_path());
-            $publicPath = realpath(public_path());
 
-            if ($scriptPath === $publicPath) {
-                return 'public';
-            } elseif ($scriptPath === $basePath) {
-                return 'root';
-            }
-            return 'unknown';
-        });
+        try {
+            $systemProcessingDirectory = Cache::rememberForever($cacheKey, function () use ($script) {
+                $scriptPath = realpath(dirname($script));
+                $basePath   = realpath(base_path());
+                $publicPath = realpath(public_path());
+
+                if ($scriptPath === $publicPath) {
+                    return 'public';
+                } elseif ($scriptPath === $basePath) {
+                    return 'root';
+                }
+                return 'unknown';
+            });
+        } catch (\Exception $e) {
+            // Fallback for CI/migration phase where cache/database might not be ready
+            $systemProcessingDirectory = 'unknown';
+        }
 
         config(['laravel-cookie-consent.system_processing_directory' => $systemProcessingDirectory]);
     }
+
 }
